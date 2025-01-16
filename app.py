@@ -53,7 +53,8 @@ def scrape():
                 model=model,
                 messages=[
                     {"role": "user", "content": prompt}
-                ]
+                ],
+                response_format={ "type": "json_object" }
             )
             return response
 
@@ -79,7 +80,7 @@ def scrape():
 
         # Get the response from OpenAI
         ai_response = generate_response(prompt=prompt, model=GPT_MODEL)
-
+        ai_response1 = ai_response.choices[0].message.content
         # Extract the content
         return jsonify(ai_response), 200
 
