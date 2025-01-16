@@ -54,7 +54,7 @@ def scrape():
                 messages=[
                     {"role": "user", "content": prompt}
                 ],
-                response_format="json"
+                response_format="json_object"
             )
             return response
 
