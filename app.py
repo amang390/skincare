@@ -82,7 +82,7 @@ def scrape():
         ai_response = generate_response(prompt=prompt, model=GPT_MODEL)
         ai_response1 = ai_response.choices[0].message.content
         # Extract the content
-        return jsonify(ai_response), 200
+        return jsonify(ai_response1), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
