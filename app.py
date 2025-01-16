@@ -53,8 +53,7 @@ def scrape():
                 model=model,
                 messages=[
                     {"role": "user", "content": prompt}
-                ],
-                response_format="json_object"
+                ]
             )
             return response
 
