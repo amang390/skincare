@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify
 import requests
 from bs4 import BeautifulSoup as bs
 from openai import OpenAI
+import json
 
 app = Flask(__name__)
 
@@ -80,7 +81,7 @@ def scrape():
 
         # Get the response from OpenAI
         ai_response = generate_response(prompt=prompt, model=GPT_MODEL)
-        ai_response1 = ai_response.choices[0].message.content
+        ai_response1 = json.loads(ai_response.choices[0].message.content)
         # Extract the content
         return jsonify(ai_response1), 200
 
