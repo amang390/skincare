@@ -84,28 +84,28 @@ def scrape():
         ai_response = generate_response(prompt=prompt, model=GPT_MODEL)
         ai_response1 = json.loads(ai_response.choices[0].message.content)
         
-        # Extract brand and name from AI response
-        brand = ai_response1.get('productinfo').get('brand', '').lower()
-        name = ai_response1.get('productinfo').get('name', '').lower()
+#         # Extract brand and name from AI response
+#         brand = ai_response1.get('productinfo').get('brand', '').lower()
+#         name = ai_response1.get('productinfo').get('name', '').lower()
 
-        # Load the CSV file
-        df = pd.read_csv('Skincare_final.csv')
+#         # Load the CSV file
+#         df = pd.read_csv('Skincare_final.csv')
         
-        def calculate_similarity(row):
-            brand_similarity = fuzz.ratio(brand, row['Brand'].lower())
-            name_similarity = fuzz.ratio(name, row['Name'].lower())
-            return (brand_similarity + name_similarity) / 2  # Average similarity
+#         def calculate_similarity(row):
+#             brand_similarity = fuzz.ratio(brand, row['Brand'].lower())
+#             name_similarity = fuzz.ratio(name, row['Name'].lower())
+#             return (brand_similarity + name_similarity) / 2  # Average similarity
 
-                # Apply similarity calculation
-        df['similarity'] = df.apply(calculate_similarity, axis=1)
+#                 # Apply similarity calculation
+#         df['similarity'] = df.apply(calculate_similarity, axis=1)
         
         
-        if not df.empty:
-            # Return the best match
-            best_match = df.sort_values(by='similarity', ascending=False).reset_index(drop=True)[0]
-            ai_response1['matched_product'] = best_match
-        else:
-            ai_response1['matched_product'] = None
+#         if not df.empty:
+#             # Return the best match
+#             best_match = df.sort_values(by='similarity', ascending=False).reset_index(drop=True)[0]
+#             ai_response1['matched_product'] = best_match
+#         else:
+#             ai_response1['matched_product'] = None
 
         # Extract the content
         return jsonify(ai_response1), 200
