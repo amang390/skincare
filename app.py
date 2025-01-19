@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from openai import OpenAI
 import json
+from rapidfuzz import fuzz
 
 app = Flask(__name__)
 
