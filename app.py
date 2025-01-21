@@ -67,14 +67,14 @@ def scrape():
              'name': Name of the product, 
              'brand': Product brand,
              'category': Assign one of the value Hair, Skincare, Fragnances, Bath & Body, Makeup or Other,
-             'original_price': Original price without any currency symbol,
-             'offer_price': Offer price without any currency symbol,
-             'size_in_number': Size amount without the unit,
+             'original_price': Original price without any currency symbol in integer,
+             'offer_price': Offer price without any currency symbol in integer,
+             'size_in_number': Size amount in integer without the unit,
              'size_unit': Size unit such as gm, ml etc.,
              'description': Only text, exlude images, rephrase if longer than 100 words to reduce it to 100 words,
              'ingredients': [List of ingredients],
              'how_to_use': Bullet points of how to use,
-             'rating': Return only rating value, exclude number of rating and reviews,
+             'rating': Return only rating value in integer, exclude number of rating and reviews,
              'best_before': Return best before time period of use since manufacture}
              </productinfo>"""
         
@@ -83,6 +83,16 @@ def scrape():
         # Get the response from OpenAI
         ai_response = generate_response(prompt=prompt, model=GPT_MODEL)
         ai_response1 = json.loads(ai_response.choices[0].message.content)
+        
+        if ai_response1.get('offer_price') is None:
+            ai_response1['offer_price'] = ai_response1.get('original_price')
+            
+        int_list = ['offer_price','original_price','rating','size_in_number']
+        
+        for key in int_list:
+            value = ai_response1.get(key)
+            if isinstance(value, str) and value.isdigit():
+                ai_response1[key] = int(value)
         
 #         # Extract brand and name from AI response
 #         brand = ai_response1.get('productinfo').get('brand', '').lower()
